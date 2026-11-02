@@ -36,7 +36,6 @@
     position: relative;
   }
 
-  /* Fundo com brilho sutil (Glow) */
   body::before {
     content: '';
     position: absolute;
@@ -144,6 +143,96 @@
   }
   .swap-btn:hover { transform: scale(1.05) rotate(180deg); box-shadow: 0 8px 25px rgba(168, 85, 247, 0.6); }
   .swap-btn:active { transform: scale(0.95); }
+
+  /* Audio Settings (Tom e Velocidade) */
+  .audio-settings {
+    background: var(--panel-bg);
+    border: 1px solid var(--panel-border);
+    border-radius: 18px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    backdrop-filter: blur(10px);
+  }
+
+  .profile-buttons {
+    display: flex;
+    gap: 8px;
+  }
+  
+  .profile-btn {
+    flex: 1;
+    background: transparent;
+    border: 1px solid transparent;
+    color: var(--text-muted);
+    padding: 10px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+  
+  .profile-btn.active {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.05);
+    color: #fff;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  }
+
+  .speed-control {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 4px;
+  }
+
+  .speed-control label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+  
+  .speed-control span {
+    color: var(--cyan);
+    font-weight: 700;
+    width: 36px;
+    text-align: right;
+  }
+
+  input[type=range] {
+    -webkit-appearance: none;
+    width: 100%;
+    background: transparent;
+  }
+  input[type=range]:focus { outline: none; }
+  input[type=range]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 6px;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 999px;
+  }
+  input[type=range]::-webkit-slider-thumb {
+    height: 18px;
+    width: 18px;
+    border-radius: 50%;
+    background: #fff;
+    cursor: pointer;
+    -webkit-appearance: none;
+    margin-top: -6px;
+    box-shadow: 0 0 10px rgba(79, 124, 255, 0.8);
+    transition: transform 0.1s;
+  }
+  input[type=range]::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+  }
 
   /* Menus Dropdown */
   .sel-container { position: relative; }
@@ -254,12 +343,23 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
+    gap: 8px;
     cursor: pointer;
     transition: all 0.3s ease;
   }
   .action-btn:hover { background: var(--btn-hover); transform: translateY(-1px); border-color: rgba(255,255,255,0.2); }
   .action-btn:active { transform: translateY(1px); }
+  
+  .icon-svg {
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    fill: none;
+    transition: all 0.3s;
+  }
 
   /* Efeito de gravação do microfone */
   .action-btn.listening {
@@ -268,11 +368,64 @@
     color: var(--error);
     animation: pulse-mic 1.5s infinite;
   }
+  .action-btn.listening .icon-svg { stroke: var(--error); }
+  
   @keyframes pulse-mic {
     0% { box-shadow: 0 0 0 0 rgba(251, 113, 133, 0.4); }
     70% { box-shadow: 0 0 0 10px rgba(251, 113, 133, 0); }
     100% { box-shadow: 0 0 0 0 rgba(251, 113, 133, 0); }
   }
+
+  /* Painel de Histórico */
+  .history-panel {
+    display: none;
+    background: rgba(0,0,0,0.3);
+    border-radius: 16px;
+    padding: 12px;
+    margin-top: 4px;
+    border: 1px solid var(--panel-border);
+    animation: fadeInDown 0.3s ease;
+  }
+  .history-panel.active { display: block; }
+  
+  .history-list {
+    max-height: 150px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+  .history-item {
+    background: rgba(255,255,255,0.03);
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+    border-left: 2px solid var(--accent);
+  }
+  .history-item:hover { background: rgba(255,255,255,0.08); }
+  .history-item strong { color: var(--text-main); display: block; margin-bottom: 4px; font-weight: 600;}
+  .history-item span { color: var(--text-muted); }
+  
+  .clear-hist-btn {
+    width: 100%;
+    background: rgba(251, 113, 133, 0.1);
+    color: var(--error);
+    border: 1px solid rgba(251, 113, 133, 0.3);
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .clear-hist-btn:hover { background: rgba(251, 113, 133, 0.2); }
 
   .panel-footer {
     display: flex;
@@ -364,7 +517,6 @@
   .overlay-content p { font-size: 22px; font-weight: 700; margin-bottom: 30px; line-height: 1.4; color: #fff; }
   .overlay-content small { display: block; color: var(--text-muted); margin-bottom: 20px; font-size: 15px; line-height: 1.4;}
   
-  /* Scrollbar */
   ::-webkit-scrollbar { width: 6px; }
   ::-webkit-scrollbar-track { background: transparent; }
   ::-webkit-scrollbar-thumb { background: var(--panel-border); border-radius: 10px; }
@@ -374,14 +526,12 @@
 
 <div class="app-container">
   
-  <!-- Header -->
   <header class="header">
     <div class="badge">Tradutor com voz e legenda</div>
     <h1 class="logo">LinguaVox</h1>
-    <p class="subtitle">Traduza entre 30 idiomas com motor Google • MyMemory • Libre, áudio perfeito e legenda.</p>
+    <p class="subtitle">Traduza entre 30 idiomas com motor Google • MyMemory • Libre, áudio natural e legenda.</p>
   </header>
 
-  <!-- Language Selector -->
   <div class="lang-bar">
     <div class="sel-container" id="fromContainer">
       <button class="lang-btn" id="fromBtn">
@@ -402,7 +552,25 @@
     </div>
   </div>
 
-  <!-- Origem Panel -->
+  <!-- Controles de Áudio -->
+  <div class="audio-settings">
+    <div class="profile-buttons">
+      <button class="profile-btn active" data-profile="normal">
+        <svg class="icon-svg" style="width:16px;height:16px;" viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="22"></line></svg>
+        Tom Normal
+      </button>
+      <button class="profile-btn" data-profile="grave">
+        <svg class="icon-svg" style="width:16px;height:16px;" viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="22"></line></svg>
+        Tom Grave
+      </button>
+    </div>
+    <div class="speed-control">
+      <label>Velocidade</label>
+      <input type="range" id="speedSlider" min="0.5" max="1.5" step="0.1" value="1.0">
+      <span id="speedValue">1.0x</span>
+    </div>
+  </div>
+
   <div class="panel">
     <div class="panel-header">
       <span class="panel-label label-origem">Origem</span>
@@ -411,10 +579,30 @@
     <textarea id="srcText" placeholder="Digite ou fale algo..."></textarea>
     
     <div class="action-grid">
-      <button class="action-btn" id="micBtn">🎤 Falar</button>
-      <button class="action-btn" id="speakSrcBtn">🔊 Ouvir</button>
-      <button class="action-btn" id="clearBtn">✕ Limpar</button>
-      <button class="action-btn" id="histBtn">🕒 Histórico (<span id="histCount">0</span>)</button>
+      <button class="action-btn" id="micBtn">
+        <svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="22"></line></svg>
+        Falar
+      </button>
+      <button class="action-btn" id="speakSrcBtn">
+        <svg class="icon-svg" viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg>
+        Ouvir
+      </button>
+      <button class="action-btn" id="clearBtn">
+        <svg class="icon-svg" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        Limpar
+      </button>
+      <button class="action-btn" id="histBtn">
+        <svg class="icon-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+        Histórico (<span id="histCount">0</span>)
+      </button>
+    </div>
+
+    <div class="history-panel" id="historyPanel">
+      <div class="history-list" id="historyList"></div>
+      <button class="clear-hist-btn" id="clearHistBtn">
+        <svg class="icon-svg" style="width:14px;height:14px;" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+        Limpar Histórico
+      </button>
     </div>
 
     <div class="panel-footer">
@@ -423,7 +611,6 @@
     </div>
   </div>
 
-  <!-- Tradução Panel -->
   <div class="panel">
     <div class="panel-header">
       <span class="panel-label label-traducao">Tradução</span>
@@ -432,9 +619,18 @@
     <textarea id="outText" placeholder="A tradução aparecerá aqui..." readonly></textarea>
     
     <div class="action-grid action-grid-3">
-      <button class="action-btn" id="speakOutBtn">🔊 Ouvir</button>
-      <button class="action-btn" id="copyBtn">📋 Copiar</button>
-      <button class="action-btn" id="subBtn">▭ Legenda</button>
+      <button class="action-btn" id="speakOutBtn">
+        <svg class="icon-svg" viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg>
+        Ouvir
+      </button>
+      <button class="action-btn" id="copyBtn">
+        <svg class="icon-svg" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+        Copiar
+      </button>
+      <button class="action-btn" id="subBtn">
+        <svg class="icon-svg" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+        Legenda
+      </button>
     </div>
 
     <div class="panel-footer">
@@ -443,19 +639,15 @@
     </div>
   </div>
 
-  <!-- Main Action -->
   <button class="main-btn" id="translateBtn">TRADUZIR AGORA</button>
   
-  <div class="status-msg" id="statusMsg">
-    <!-- Status -->
-  </div>
+  <div class="status-msg" id="statusMsg"></div>
 
   <div class="app-footer">
     LinguaVox • tradução via Google + MyMemory • 100% no navegador
   </div>
 </div>
 
-<!-- Overlay Legenda -->
 <div class="overlay" id="overlay">
   <div class="overlay-content">
     <h3>Modo Legenda</h3>
@@ -463,13 +655,15 @@
     <p id="ovOut"></p>
     <div class="action-grid">
       <button class="action-btn" id="ovClose">Fechar</button>
-      <button class="action-btn" style="background: var(--accent); color: white; border: none;" id="ovPlay">🔊 Ouvir</button>
+      <button class="action-btn" style="background: var(--accent); color: white; border: none;" id="ovPlay">
+        <svg class="icon-svg" viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg>
+        Ouvir
+      </button>
     </div>
   </div>
 </div>
 
 <script>
-  // Dados dos Idiomas
   const LANGS = [
     {c:"pt", n:"Português", f:"🇧🇷"}, {c:"en", n:"Inglês", f:"🇺🇸"},
     {c:"es", n:"Espanhol", f:"🇪🇸"}, {c:"fr", n:"Francês", f:"🇫🇷"},
@@ -488,14 +682,32 @@
     {c:"tl", n:"Filipino", f:"🇵🇭"}, {c:"bn", n:"Bengali", f:"🇧🇩"}
   ];
 
-  // Estado Global (Gênero masculino removido)
+  // Mapeamento principal de Locales
+  const localeMap = {
+    pt: 'pt-BR', en: 'en-US', es: 'es-ES', fr: 'fr-FR', it: 'it-IT',
+    de: 'de-DE', ja: 'ja-JP', ko: 'ko-KR', zh: 'zh-CN', ru: 'ru-RU',
+    ar: 'ar-SA', hi: 'hi-IN', nl: 'nl-NL', pl: 'pl-PL', tr: 'tr-TR',
+    uk: 'uk-UA', el: 'el-GR', he: 'he-IL', th: 'th-TH', vi: 'vi-VN',
+    sv: 'sv-SE', no: 'nb-NO', da: 'da-DK', fi: 'fi-FI', ro: 'ro-RO',
+    cs: 'cs-CZ', hu: 'hu-HU', id: 'id-ID', tl: 'fil-PH', bn: 'bn-BD'
+  };
+
+  // Fallbacks para idiomas com problemas de código no Web Speech API
+  const specialLocales = {
+    ar: ['ar-SA', 'ar-EG', 'ar-AE', 'ar'],
+    he: ['he-IL', 'he', 'iw-IL', 'iw'],
+    no: ['nb-NO', 'no-NO', 'no', 'nn-NO'],
+    id: ['id-ID', 'id']
+  };
+
   let state = {
     from: "pt",
     to: "en",
-    history: []
+    history: [],
+    audioProfile: "normal",
+    speed: 1.0
   };
 
-  // Carregar do localStorage
   try {
     const savedHist = localStorage.getItem("linguavox-h");
     if (savedHist) state.history = JSON.parse(savedHist);
@@ -503,9 +715,12 @@
     if (savedFrom) state.from = savedFrom;
     const savedTo = localStorage.getItem("linguavox-to");
     if (savedTo) state.to = savedTo;
+    const savedProfile = localStorage.getItem("linguavox-audio-profile");
+    if (savedProfile) state.audioProfile = savedProfile;
+    const savedSpeed = localStorage.getItem("linguavox-speed");
+    if (savedSpeed) state.speed = parseFloat(savedSpeed);
   } catch (e) {}
 
-  // Elementos DOM
   const srcText = document.getElementById("srcText");
   const outText = document.getElementById("outText");
   const translateBtn = document.getElementById("translateBtn");
@@ -522,8 +737,13 @@
   const toDropdown = document.getElementById("toDropdown");
   const histCount = document.getElementById("histCount");
   const micBtn = document.getElementById("micBtn");
+  const historyPanel = document.getElementById("historyPanel");
+  const historyList = document.getElementById("historyList");
+  const clearHistBtn = document.getElementById("clearHistBtn");
+  const profileBtns = document.querySelectorAll(".profile-btn");
+  const speedSlider = document.getElementById("speedSlider");
+  const speedValue = document.getElementById("speedValue");
 
-  // Utilitários
   const langBy = (code) => LANGS.find(l => l.c === code) || LANGS[0];
   
   function setStatus(text, isError = false) {
@@ -536,7 +756,32 @@
     outCount.textContent = `${outText.value.length} caracteres`;
   }
 
-  // Preencher Dropdowns
+  speedSlider.value = state.speed;
+  speedValue.textContent = state.speed.toFixed(1) + "x";
+
+  speedSlider.addEventListener("input", (e) => {
+    state.speed = parseFloat(e.target.value);
+    speedValue.textContent = state.speed.toFixed(1) + "x";
+    localStorage.setItem("linguavox-speed", state.speed);
+  });
+
+  profileBtns.forEach(btn => {
+    if (btn.dataset.profile === state.audioProfile) {
+      btn.classList.add("active");
+    } else {
+      btn.classList.remove("active");
+    }
+    
+    btn.onclick = () => {
+      state.audioProfile = btn.dataset.profile;
+      profileBtns.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      localStorage.setItem("linguavox-audio-profile", state.audioProfile);
+      setStatus(`Tom de voz alterado para: ${state.audioProfile === 'grave' ? 'Grave' : 'Normal'}`);
+      setTimeout(() => setStatus(""), 2000);
+    };
+  });
+
   function renderDropdowns() {
     fromDropdown.innerHTML = "";
     toDropdown.innerHTML = "";
@@ -583,23 +828,28 @@
     localStorage.setItem("linguavox-to", state.to);
   }
 
-  // Controle dos Dropdowns
   document.getElementById("fromBtn").onclick = (e) => {
     e.stopPropagation();
     fromDropdown.classList.toggle("active");
     toDropdown.classList.remove("active");
+    historyPanel.classList.remove("active");
   };
   document.getElementById("toBtn").onclick = (e) => {
     e.stopPropagation();
     toDropdown.classList.toggle("active");
     fromDropdown.classList.remove("active");
+    historyPanel.classList.remove("active");
   };
-  document.addEventListener("click", () => {
-    fromDropdown.classList.remove("active");
-    toDropdown.classList.remove("active");
+  document.addEventListener("click", (e) => {
+    if (!e.target.closest('#fromContainer') && !e.target.closest('#toContainer')) {
+      fromDropdown.classList.remove("active");
+      toDropdown.classList.remove("active");
+    }
+    if (!e.target.closest('#histBtn') && !e.target.closest('#historyPanel')) {
+      historyPanel.classList.remove("active");
+    }
   });
 
-  // Swap de Idiomas
   document.getElementById("swapBtn").onclick = () => {
     const temp = state.from;
     state.from = state.to;
@@ -614,7 +864,6 @@
     if (srcText.value.trim()) doTranslate();
   };
 
-  // APIs de Tradução
   async function translateGoogle(text, from, to) {
     const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${from}&tl=${to}&dt=t&q=${encodeURIComponent(text)}`;
     const res = await fetch(url);
@@ -639,7 +888,6 @@
     throw new Error("Motores de tradução falharam.");
   }
 
-  // Ação Principal
   let isTranslating = false;
   async function doTranslate() {
     const text = srcText.value.trim();
@@ -681,7 +929,6 @@
 
   translateBtn.onclick = doTranslate;
 
-  // Textarea Input
   srcText.addEventListener("input", () => {
     updateCounts();
     clearTimeout(window._typingTimer);
@@ -716,7 +963,64 @@
     }
   };
 
-  // TTS (Voz Padrão: Feminina / Suave)
+  // ==========================================
+  // SÍNTESE DE VOZ NATURAL CORRIGIDA
+  // ==========================================
+  
+  function getBestVoice(langCode, profile) {
+    const voices = speechSynthesis.getVoices();
+    
+    // Pega a lista de códigos válidos para o idioma (ex: he-IL, he, iw)
+    let targetLocales = specialLocales[langCode] || [localeMap[langCode] || langCode];
+    let available = [];
+    
+    // 1. Tenta match exato com os códigos
+    for (let code of targetLocales) {
+      available = voices.filter(v => v.lang.toLowerCase().replace('_', '-') === code.toLowerCase());
+      if (available.length > 0) break;
+    }
+    
+    // 2. Tenta match pelo prefixo base (ex: 'ar', 'he', 'id', 'no')
+    if (available.length === 0) {
+      let prefix = (targetLocales[0] || langCode).split('-')[0].toLowerCase();
+      available = voices.filter(v => v.lang.toLowerCase().replace('_', '-').startsWith(prefix));
+    }
+    
+    // 3. Casos ultra-específicos (Hebraico pode ser 'iw', Norueguês pode ser 'nb')
+    if (available.length === 0) {
+      if (langCode === 'he') available = voices.filter(v => v.lang.toLowerCase().includes('he') || v.lang.toLowerCase().includes('iw'));
+      if (langCode === 'no') available = voices.filter(v => v.lang.toLowerCase().includes('no') || v.lang.toLowerCase().includes('nb'));
+    }
+
+    // Se ainda estiver vazio, retorna null para deixar o navegador usar a voz padrão do sistema
+    if (available.length === 0) return null; 
+
+    // Nomes conhecidos de vozes neurais/humanas
+    const maleKeywords = ['daniel', 'felipe', 'alex', 'david', 'mark', 'jorge', 'thomas', 'diego'];
+    const femaleKeywords = ['luciana', 'samantha', 'monica', 'paulina', 'amelie', 'karen', 'zira', 'victoria', 'maria', 'joana', 'francisca'];
+    const premiumKeywords = ['natural', 'neural', 'google', 'microsoft', 'siri', 'wavenet', 'online'];
+
+    let bestVoice = null;
+
+    if (profile === 'grave') {
+      bestVoice = available.find(v => 
+        maleKeywords.some(k => v.name.toLowerCase().includes(k)) ||
+        (premiumKeywords.some(p => v.name.toLowerCase().includes(p)) && v.name.toLowerCase().includes('male'))
+      );
+    } else {
+      bestVoice = available.find(v => 
+        femaleKeywords.some(k => v.name.toLowerCase().includes(k)) ||
+        (premiumKeywords.some(p => v.name.toLowerCase().includes(p)) && !v.name.toLowerCase().includes('male'))
+      );
+    }
+
+    if (!bestVoice) {
+      bestVoice = available.find(v => premiumKeywords.some(p => v.name.toLowerCase().includes(p)));
+    }
+
+    return bestVoice || available[0];
+  }
+
   function speak(text, langCode) {
     if (!text.trim()) return;
     if (!("speechSynthesis" in window)) {
@@ -725,48 +1029,84 @@
     }
     
     speechSynthesis.cancel();
+    
     const utterance = new SpeechSynthesisUtterance(text);
-    const voices = speechSynthesis.getVoices();
     
-    let targetCode = langCode;
-    if (langCode === "pt") targetCode = "pt-BR";
-    else if (langCode === "en") targetCode = "en-US";
+    // Define o locale base (fallback) para garantir que o texto seja lido corretamente
+    let finalLang = (specialLocales[langCode] && specialLocales[langCode][0]) || localeMap[langCode] || langCode;
+    utterance.lang = finalLang;
     
-    const voice = voices.find(v => v.lang.startsWith(targetCode)) || voices.find(v => v.lang.startsWith(langCode));
+    const voice = getBestVoice(langCode, state.audioProfile);
+    if (voice) {
+      utterance.voice = voice;
+      utterance.lang = voice.lang; // Sincroniza com o locale exato da voz encontrada
+    }
     
-    if (voice) utterance.voice = voice;
-    utterance.lang = voice ? voice.lang : targetCode;
+    // Ajuste de Tom (Pitch)
+    if (state.audioProfile === 'grave') {
+      utterance.pitch = 0.8; 
+    } else {
+      utterance.pitch = 1.05; 
+    }
     
-    // Configuração fixa para voz Suave/Feminina
-    utterance.rate = 0.95;
-    utterance.pitch = 1.1; 
+    // Ajuste de Velocidade (Rate)
+    utterance.rate = state.speed;
     
     speechSynthesis.speak(utterance);
     setStatus("🔊 Reproduzindo áudio...");
+    
     utterance.onend = () => setStatus("");
+    utterance.onerror = (e) => {
+      console.error("Erro TTS:", e);
+      setStatus("Erro ao reproduzir este idioma.", true);
+      setTimeout(() => setStatus(""), 3000);
+    };
   }
 
   document.getElementById("speakSrcBtn").onclick = () => speak(srcText.value, state.from);
   document.getElementById("speakOutBtn").onclick = () => speak(outText.value, state.to);
 
-  // Histórico
   function updateHistoryUI() {
     histCount.textContent = state.history.length;
-  }
-  
-  document.getElementById("histBtn").onclick = () => {
+    historyList.innerHTML = "";
+    
     if (state.history.length === 0) {
-      setStatus("Nenhum histórico ainda.");
+      historyList.innerHTML = '<div style="text-align:center; font-size:12px; color:var(--text-muted); padding:10px;">Nenhum histórico recente.</div>';
       return;
     }
-    const last = state.history[0];
-    srcText.value = last.src;
-    outText.value = last.out;
-    updateCounts();
-    setStatus("Histórico recuperado.");
+
+    state.history.forEach((item) => {
+      const div = document.createElement("div");
+      div.className = "history-item";
+      div.innerHTML = `<strong>${item.src}</strong><span>${item.out}</span>`;
+      div.onclick = () => {
+        srcText.value = item.src;
+        outText.value = item.out;
+        updateCounts();
+        historyPanel.classList.remove("active");
+        setStatus("Histórico recuperado.");
+        setTimeout(() => setStatus(""), 2000);
+      };
+      historyList.appendChild(div);
+    });
+  }
+
+  document.getElementById("histBtn").onclick = (e) => {
+    e.stopPropagation();
+    historyPanel.classList.toggle("active");
+    fromDropdown.classList.remove("active");
+    toDropdown.classList.remove("active");
   };
 
-  // Legenda Overlay
+  clearHistBtn.onclick = (e) => {
+    e.stopPropagation();
+    state.history = [];
+    localStorage.removeItem("linguavox-h");
+    updateHistoryUI();
+    setStatus("Histórico limpo.", false);
+    setTimeout(() => setStatus(""), 2000);
+  };
+
   const overlay = document.getElementById("overlay");
   document.getElementById("subBtn").onclick = () => {
     if (!outText.value) {
@@ -783,11 +1123,14 @@
   overlay.onclick = (e) => { if (e.target === overlay) overlay.classList.remove("active"); };
 
   // ==========================================
-  // RECONHECIMENTO DE VOZ (Botão Falar)
+  // RECONHECIMENTO DE VOZ (STT) CORRIGIDO
   // ==========================================
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
   let recognition = null;
   let isListening = false;
+  
+  const micIconHTML = `<svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="22"></line></svg>`;
+  const micListeningHTML = `<svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="22"></line><rect x="8" y="4" width="8" height="10" rx="4" fill="currentColor" opacity="0.3"></rect></svg>`;
 
   if (SpeechRecognition) {
     recognition = new SpeechRecognition();
@@ -797,7 +1140,7 @@
     recognition.onstart = () => {
       isListening = true;
       micBtn.classList.add("listening");
-      micBtn.innerHTML = '🔴 Ouvindo...';
+      micBtn.innerHTML = `${micListeningHTML} Ouvindo...`;
       setStatus("Ouvindo... Fale agora.");
     };
 
@@ -812,7 +1155,7 @@
       console.error(event.error);
       isListening = false;
       micBtn.classList.remove("listening");
-      micBtn.innerHTML = '🎤 Falar';
+      micBtn.innerHTML = `${micIconHTML} Falar`;
       
       if (event.error === 'not-allowed') {
         setStatus("Permissão de microfone negada.", true);
@@ -827,7 +1170,7 @@
     recognition.onend = () => {
       isListening = false;
       micBtn.classList.remove("listening");
-      micBtn.innerHTML = '🎤 Falar';
+      micBtn.innerHTML = `${micIconHTML} Falar`;
       if (statusMsg.textContent === "Ouvindo... Fale agora.") {
         setStatus("");
       }
@@ -842,13 +1185,8 @@
     if (isListening) {
       recognition.stop();
     } else {
-      // Define o idioma do microfone com base na seleção de origem
-      let recLang = state.from;
-      if (state.from === 'pt') recLang = 'pt-BR';
-      else if (state.from === 'en') recLang = 'en-US';
-      else if (state.from === 'es') recLang = 'es-ES';
-      else if (state.from === 'fr') recLang = 'fr-FR';
-      
+      // Define o código do idioma para o reconhecimento
+      let recLang = (specialLocales[state.from] && specialLocales[state.from][0]) || localeMap[state.from] || state.from;
       recognition.lang = recLang;
       try {
         recognition.start();
@@ -858,7 +1196,6 @@
     }
   };
 
-  // Inicialização
   function init() {
     updateLangUI();
     updateHistoryUI();
@@ -872,6 +1209,8 @@
     if ("speechSynthesis" in window) {
       speechSynthesis.getVoices();
       setTimeout(() => speechSynthesis.getVoices(), 500);
+      setTimeout(() => speechSynthesis.getVoices(), 1500);
+      speechSynthesis.onvoiceschanged = () => speechSynthesis.getVoices();
     }
   }
 
