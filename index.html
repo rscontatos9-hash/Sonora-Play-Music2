@@ -63,6 +63,14 @@
   /* Header */
   .header { text-align: center; margin-bottom: 8px; }
   
+  .top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
   .badge {
     display: inline-block;
     padding: 6px 14px;
@@ -74,9 +82,27 @@
     font-weight: 700;
     letter-spacing: 0.05em;
     text-transform: uppercase;
-    margin-bottom: 16px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    transition: all 0.3s;
   }
+
+  .ui-lang-select {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-main);
+    border-radius: 999px;
+    padding: 6px 10px;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    outline: none;
+    appearance: none;
+    -webkit-appearance: none;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    transition: all 0.2s;
+  }
+  .ui-lang-select:hover { background: rgba(255, 255, 255, 0.1); }
+  .ui-lang-select option { background: #121420; color: white; }
 
   .logo {
     font-size: 42px;
@@ -527,9 +553,16 @@
 <div class="app-container">
   
   <header class="header">
-    <div class="badge">Tradutor com voz e legenda</div>
+    <div class="top-bar">
+      <div class="badge" id="uiBadge">Tradutor com voz e legenda</div>
+      <select class="ui-lang-select" id="uiLangSelect">
+        <option value="pt">🇧🇷 PT</option>
+        <option value="en">🇺🇸 EN</option>
+        <option value="es">🇪🇸 ES</option>
+      </select>
+    </div>
     <h1 class="logo">LinguaVox</h1>
-    <p class="subtitle">Traduza entre 30 idiomas com motor Google • MyMemory • Libre, áudio natural e legenda.</p>
+    <p class="subtitle" id="uiSubtitle">Traduza entre 30 idiomas com motor Google • MyMemory • Libre, áudio natural e legenda.</p>
   </header>
 
   <div class="lang-bar">
@@ -557,15 +590,15 @@
     <div class="profile-buttons">
       <button class="profile-btn active" data-profile="normal">
         <svg class="icon-svg" style="width:16px;height:16px;" viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="22"></line></svg>
-        Tom Normal
+        <span id="uiNormalTone">Tom Normal</span>
       </button>
       <button class="profile-btn" data-profile="grave">
         <svg class="icon-svg" style="width:16px;height:16px;" viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="22"></line></svg>
-        Tom Grave
+        <span id="uiDeepTone">Tom Grave</span>
       </button>
     </div>
     <div class="speed-control">
-      <label>Velocidade</label>
+      <label id="uiSpeed">Velocidade</label>
       <input type="range" id="speedSlider" min="0.5" max="1.5" step="0.1" value="1.0">
       <span id="speedValue">1.0x</span>
     </div>
@@ -573,7 +606,7 @@
 
   <div class="panel">
     <div class="panel-header">
-      <span class="panel-label label-origem">Origem</span>
+      <span class="panel-label label-origem" id="uiOrigin">Origem</span>
       <span class="chip" id="fromChip">Português</span>
     </div>
     <textarea id="srcText" placeholder="Digite ou fale algo..."></textarea>
@@ -581,19 +614,19 @@
     <div class="action-grid">
       <button class="action-btn" id="micBtn">
         <svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="22"></line></svg>
-        Falar
+        <span id="uiSpeakBtn">Falar</span>
       </button>
       <button class="action-btn" id="speakSrcBtn">
         <svg class="icon-svg" viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg>
-        Ouvir
+        <span id="uiListenBtn">Ouvir</span>
       </button>
       <button class="action-btn" id="clearBtn">
         <svg class="icon-svg" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-        Limpar
+        <span id="uiClearBtn">Limpar</span>
       </button>
       <button class="action-btn" id="histBtn">
         <svg class="icon-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-        Histórico (<span id="histCount">0</span>)
+        <span id="uiHistBtn">Histórico</span> (<span id="histCount">0</span>)
       </button>
     </div>
 
@@ -601,7 +634,7 @@
       <div class="history-list" id="historyList"></div>
       <button class="clear-hist-btn" id="clearHistBtn">
         <svg class="icon-svg" style="width:14px;height:14px;" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
-        Limpar Histórico
+        <span id="uiClearHist">Limpar Histórico</span>
       </button>
     </div>
 
@@ -613,7 +646,7 @@
 
   <div class="panel">
     <div class="panel-header">
-      <span class="panel-label label-traducao">Tradução</span>
+      <span class="panel-label label-traducao" id="uiTranslation">Tradução</span>
       <span class="chip" id="toChip">Inglês 100%</span>
     </div>
     <textarea id="outText" placeholder="A tradução aparecerá aqui..." readonly></textarea>
@@ -621,21 +654,21 @@
     <div class="action-grid action-grid-3">
       <button class="action-btn" id="speakOutBtn">
         <svg class="icon-svg" viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg>
-        Ouvir
+        <span id="uiListenBtn2">Ouvir</span>
       </button>
       <button class="action-btn" id="copyBtn">
         <svg class="icon-svg" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-        Copiar
+        <span id="uiCopyBtn">Copiar</span>
       </button>
       <button class="action-btn" id="subBtn">
         <svg class="icon-svg" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
-        Legenda
+        <span id="uiSubBtn">Legenda</span>
       </button>
     </div>
 
     <div class="panel-footer">
       <span id="outCount">0 caracteres</span>
-      <span>Tradução automática</span>
+      <span id="uiAutoTrans">Tradução automática</span>
     </div>
   </div>
 
@@ -643,27 +676,145 @@
   
   <div class="status-msg" id="statusMsg"></div>
 
-  <div class="app-footer">
+  <div class="app-footer" id="uiFooter">
     LinguaVox • tradução via Google + MyMemory • 100% no navegador
   </div>
 </div>
 
 <div class="overlay" id="overlay">
   <div class="overlay-content">
-    <h3>Modo Legenda</h3>
+    <h3 id="uiModalTitle">Modo Legenda</h3>
     <small id="ovSrc"></small>
     <p id="ovOut"></p>
     <div class="action-grid">
-      <button class="action-btn" id="ovClose">Fechar</button>
+      <button class="action-btn" id="ovClose"><span id="uiModalClose">Fechar</span></button>
       <button class="action-btn" style="background: var(--accent); color: white; border: none;" id="ovPlay">
         <svg class="icon-svg" viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg>
-        Ouvir
+        <span id="uiModalListen">Ouvir</span>
       </button>
     </div>
   </div>
 </div>
 
 <script>
+  // Dicionário de Internacionalização (i18n)
+  const i18n = {
+    pt: {
+      badge: "Tradutor com voz e legenda",
+      subtitle: "Traduza entre 30 idiomas com motor Google • MyMemory • Libre, áudio natural e legenda.",
+      normalTone: "Tom Normal",
+      deepTone: "Tom Grave",
+      speed: "Velocidade",
+      origin: "Origem",
+      translation: "Tradução",
+      srcPlaceholder: "Digite ou fale algo...",
+      outPlaceholder: "A tradução aparecerá aqui...",
+      speak: "Falar",
+      listen: "Ouvir",
+      clear: "Limpar",
+      history: "Histórico",
+      copy: "Copiar",
+      subtitleBtn: "Legenda",
+      translateBtn: "TRADUZIR AGORA",
+      translatingBtn: "TRADUZINDO...",
+      clearHistory: "Limpar Histórico",
+      noHistory: "Nenhum histórico recente.",
+      chars: "caracteres",
+      autoTrans: "Tradução automática",
+      statusListening: "Ouvindo... Fale agora.",
+      statusTranslating: "Traduzindo...",
+      statusSuccess: "✓ Traduzido com sucesso",
+      statusCopied: "✓ Copiado!",
+      statusRecovered: "Histórico recuperado.",
+      statusCleared: "Histórico limpo.",
+      statusError: "Erro na tradução. Verifique a conexão.",
+      statusMicError: "Erro no microfone.",
+      statusMicDenied: "Permissão de microfone negada.",
+      statusNoSpeech: "Nenhuma fala detectada.",
+      statusMicUnsupported: "Reconhecimento de voz não suportado.",
+      modalTitle: "Modo Legenda",
+      modalClose: "Fechar",
+      modalListen: "Ouvir",
+      footer: "LinguaVox • tradução via Google + MyMemory • 100% no navegador"
+    },
+    en: {
+      badge: "Voice and subtitle translator",
+      subtitle: "Translate between 30 languages with Google • MyMemory • Libre engines, natural audio, and subtitles.",
+      normalTone: "Normal Tone",
+      deepTone: "Deep Tone",
+      speed: "Speed",
+      origin: "Source",
+      translation: "Translation",
+      srcPlaceholder: "Type or speak something...",
+      outPlaceholder: "Translation will appear here...",
+      speak: "Speak",
+      listen: "Listen",
+      clear: "Clear",
+      history: "History",
+      copy: "Copy",
+      subtitleBtn: "Subtitle",
+      translateBtn: "TRANSLATE NOW",
+      translatingBtn: "TRANSLATING...",
+      clearHistory: "Clear History",
+      noHistory: "No recent history.",
+      chars: "characters",
+      autoTrans: "Auto translation",
+      statusListening: "Listening... Speak now.",
+      statusTranslating: "Translating...",
+      statusSuccess: "✓ Translated successfully",
+      statusCopied: "✓ Copied!",
+      statusRecovered: "History recovered.",
+      statusCleared: "History cleared.",
+      statusError: "Translation error. Check your connection.",
+      statusMicError: "Microphone error.",
+      statusMicDenied: "Microphone permission denied.",
+      statusNoSpeech: "No speech detected.",
+      statusMicUnsupported: "Speech recognition not supported.",
+      modalTitle: "Subtitle Mode",
+      modalClose: "Close",
+      modalListen: "Listen",
+      footer: "LinguaVox • translation via Google + MyMemory • 100% in browser"
+    },
+    es: {
+      badge: "Traductor de voz y subtítulos",
+      subtitle: "Traduce entre 30 idiomas con motores Google • MyMemory • Libre, audio natural y subtítulos.",
+      normalTone: "Tono Normal",
+      deepTone: "Tono Grave",
+      speed: "Velocidad",
+      origin: "Origen",
+      translation: "Traducción",
+      srcPlaceholder: "Escribe o habla algo...",
+      outPlaceholder: "La traducción aparecerá aquí...",
+      speak: "Hablar",
+      listen: "Escuchar",
+      clear: "Limpiar",
+      history: "Historial",
+      copy: "Copiar",
+      subtitleBtn: "Subtítulo",
+      translateBtn: "TRADUCIR AHORA",
+      translatingBtn: "TRADUCIENDO...",
+      clearHistory: "Limpiar Historial",
+      noHistory: "Sin historial reciente.",
+      chars: "caracteres",
+      autoTrans: "Traducción automática",
+      statusListening: "Escuchando... Habla ahora.",
+      statusTranslating: "Traduciendo...",
+      statusSuccess: "✓ Traducido con éxito",
+      statusCopied: "✓ ¡Copiado!",
+      statusRecovered: "Historial recuperado.",
+      statusCleared: "Historial limpiado.",
+      statusError: "Error de traducción. Verifica tu conexión.",
+      statusMicError: "Error de micrófono.",
+      statusMicDenied: "Permiso de micrófono denegado.",
+      statusNoSpeech: "No se detectó habla.",
+      statusMicUnsupported: "Reconocimiento de voz no soportado.",
+      modalTitle: "Modo Subtítulo",
+      modalClose: "Cerrar",
+      modalListen: "Escuchar",
+      footer: "LinguaVox • traducción vía Google + MyMemory • 100% en el navegador"
+    }
+  };
+
   const LANGS = [
     {c:"pt", n:"Português", f:"🇧🇷"}, {c:"en", n:"Inglês", f:"🇺🇸"},
     {c:"es", n:"Espanhol", f:"🇪🇸"}, {c:"fr", n:"Francês", f:"🇫🇷"},
@@ -682,7 +833,6 @@
     {c:"tl", n:"Filipino", f:"🇵🇭"}, {c:"bn", n:"Bengali", f:"🇧🇩"}
   ];
 
-  // Mapeamento principal de Locales
   const localeMap = {
     pt: 'pt-BR', en: 'en-US', es: 'es-ES', fr: 'fr-FR', it: 'it-IT',
     de: 'de-DE', ja: 'ja-JP', ko: 'ko-KR', zh: 'zh-CN', ru: 'ru-RU',
@@ -692,7 +842,6 @@
     cs: 'cs-CZ', hu: 'hu-HU', id: 'id-ID', tl: 'fil-PH', bn: 'bn-BD'
   };
 
-  // Fallbacks para idiomas com problemas de código no Web Speech API
   const specialLocales = {
     ar: ['ar-SA', 'ar-EG', 'ar-AE', 'ar'],
     he: ['he-IL', 'he', 'iw-IL', 'iw'],
@@ -705,7 +854,8 @@
     to: "en",
     history: [],
     audioProfile: "normal",
-    speed: 1.0
+    speed: 1.0,
+    uiLang: "pt" // Idioma da interface
   };
 
   try {
@@ -719,6 +869,8 @@
     if (savedProfile) state.audioProfile = savedProfile;
     const savedSpeed = localStorage.getItem("linguavox-speed");
     if (savedSpeed) state.speed = parseFloat(savedSpeed);
+    const savedUiLang = localStorage.getItem("linguavox-uilang");
+    if (savedUiLang) state.uiLang = savedUiLang;
   } catch (e) {}
 
   const srcText = document.getElementById("srcText");
@@ -739,10 +891,53 @@
   const micBtn = document.getElementById("micBtn");
   const historyPanel = document.getElementById("historyPanel");
   const historyList = document.getElementById("historyList");
-  const clearHistBtn = document.getElementById("clearHistBtn");
   const profileBtns = document.querySelectorAll(".profile-btn");
   const speedSlider = document.getElementById("speedSlider");
   const speedValue = document.getElementById("speedValue");
+  const uiLangSelect = document.getElementById("uiLangSelect");
+
+  // Função de tradução da UI
+  const t = (key) => i18n[state.uiLang][key] || i18n['pt'][key];
+
+  function applyLanguage() {
+    document.getElementById("uiBadge").textContent = t('badge');
+    document.getElementById("uiSubtitle").textContent = t('subtitle');
+    document.getElementById("uiNormalTone").textContent = t('normalTone');
+    document.getElementById("uiDeepTone").textContent = t('deepTone');
+    document.getElementById("uiSpeed").textContent = t('speed');
+    document.getElementById("uiOrigin").textContent = t('origin');
+    document.getElementById("uiTranslation").textContent = t('translation');
+    
+    srcText.placeholder = t('srcPlaceholder');
+    outText.placeholder = t('outPlaceholder');
+    
+    document.getElementById("uiSpeakBtn").textContent = t('speak');
+    document.getElementById("uiListenBtn").textContent = t('listen');
+    document.getElementById("uiClearBtn").textContent = t('clear');
+    document.getElementById("uiHistBtn").textContent = t('history');
+    document.getElementById("uiListenBtn2").textContent = t('listen');
+    document.getElementById("uiCopyBtn").textContent = t('copy');
+    document.getElementById("uiSubBtn").textContent = t('subtitleBtn');
+    
+    document.getElementById("translateBtn").textContent = t('translateBtn');
+    document.getElementById("uiClearHist").textContent = t('clearHistory');
+    document.getElementById("uiAutoTrans").textContent = t('autoTrans');
+    document.getElementById("uiFooter").textContent = t('footer');
+    
+    document.getElementById("uiModalTitle").textContent = t('modalTitle');
+    document.getElementById("uiModalClose").textContent = t('modalClose');
+    document.getElementById("uiModalListen").textContent = t('modalListen');
+
+    updateCounts();
+    updateHistoryUI();
+  }
+
+  uiLangSelect.value = state.uiLang;
+  uiLangSelect.addEventListener("change", (e) => {
+    state.uiLang = e.target.value;
+    localStorage.setItem("linguavox-uilang", state.uiLang);
+    applyLanguage();
+  });
 
   const langBy = (code) => LANGS.find(l => l.c === code) || LANGS[0];
   
@@ -752,8 +947,8 @@
   }
 
   function updateCounts() {
-    srcCount.textContent = `${srcText.value.length} caracteres`;
-    outCount.textContent = `${outText.value.length} caracteres`;
+    srcCount.textContent = `${srcText.value.length} ${t('chars')}`;
+    outCount.textContent = `${outText.value.length} ${t('chars')}`;
   }
 
   speedSlider.value = state.speed;
@@ -777,8 +972,6 @@
       profileBtns.forEach(b => b.classList.remove("active"));
       btn.classList.add("active");
       localStorage.setItem("linguavox-audio-profile", state.audioProfile);
-      setStatus(`Tom de voz alterado para: ${state.audioProfile === 'grave' ? 'Grave' : 'Normal'}`);
-      setTimeout(() => setStatus(""), 2000);
     };
   });
 
@@ -894,22 +1087,22 @@
     if (!text) {
       outText.value = "";
       updateCounts();
-      setStatus("Digite algo para traduzir.");
+      setStatus(t('srcPlaceholder'));
       return;
     }
     if (isTranslating) return;
     
     isTranslating = true;
     translateBtn.disabled = true;
-    translateBtn.textContent = "TRADUZINDO...";
-    setStatus("Traduzindo...");
+    translateBtn.textContent = t('translatingBtn');
+    setStatus(t('statusTranslating'));
 
     try {
       const result = await robustTranslate(text, state.from, state.to);
       outText.value = result;
       updateCounts();
       
-      setStatus("✓ Traduzido com sucesso", false);
+      setStatus(t('statusSuccess'), false);
       
       state.history.unshift({ src: text, out: result, at: Date.now() });
       if (state.history.length > 30) state.history.pop();
@@ -919,11 +1112,11 @@
       updateHistoryUI();
       
     } catch (error) {
-      setStatus("Erro na tradução. Verifique a conexão.", true);
+      setStatus(t('statusError'), true);
     } finally {
       isTranslating = false;
       translateBtn.disabled = false;
-      translateBtn.textContent = "TRADUZIR AGORA";
+      translateBtn.textContent = t('translateBtn');
     }
   }
 
@@ -953,49 +1146,38 @@
     if (!outText.value) return;
     try {
       await navigator.clipboard.writeText(outText.value);
-      setStatus("✓ Copiado!");
+      setStatus(t('statusCopied'));
       setTimeout(() => setStatus(""), 2000);
     } catch (e) {
       outText.select();
       document.execCommand("copy");
-      setStatus("✓ Copiado!");
+      setStatus(t('statusCopied'));
       setTimeout(() => setStatus(""), 2000);
     }
   };
 
-  // ==========================================
-  // SÍNTESE DE VOZ NATURAL CORRIGIDA
-  // ==========================================
-  
   function getBestVoice(langCode, profile) {
     const voices = speechSynthesis.getVoices();
-    
-    // Pega a lista de códigos válidos para o idioma (ex: he-IL, he, iw)
     let targetLocales = specialLocales[langCode] || [localeMap[langCode] || langCode];
     let available = [];
     
-    // 1. Tenta match exato com os códigos
     for (let code of targetLocales) {
       available = voices.filter(v => v.lang.toLowerCase().replace('_', '-') === code.toLowerCase());
       if (available.length > 0) break;
     }
     
-    // 2. Tenta match pelo prefixo base (ex: 'ar', 'he', 'id', 'no')
     if (available.length === 0) {
       let prefix = (targetLocales[0] || langCode).split('-')[0].toLowerCase();
       available = voices.filter(v => v.lang.toLowerCase().replace('_', '-').startsWith(prefix));
     }
     
-    // 3. Casos ultra-específicos (Hebraico pode ser 'iw', Norueguês pode ser 'nb')
     if (available.length === 0) {
       if (langCode === 'he') available = voices.filter(v => v.lang.toLowerCase().includes('he') || v.lang.toLowerCase().includes('iw'));
       if (langCode === 'no') available = voices.filter(v => v.lang.toLowerCase().includes('no') || v.lang.toLowerCase().includes('nb'));
     }
 
-    // Se ainda estiver vazio, retorna null para deixar o navegador usar a voz padrão do sistema
     if (available.length === 0) return null; 
 
-    // Nomes conhecidos de vozes neurais/humanas
     const maleKeywords = ['daniel', 'felipe', 'alex', 'david', 'mark', 'jorge', 'thomas', 'diego'];
     const femaleKeywords = ['luciana', 'samantha', 'monica', 'paulina', 'amelie', 'karen', 'zira', 'victoria', 'maria', 'joana', 'francisca'];
     const premiumKeywords = ['natural', 'neural', 'google', 'microsoft', 'siri', 'wavenet', 'online'];
@@ -1024,41 +1206,37 @@
   function speak(text, langCode) {
     if (!text.trim()) return;
     if (!("speechSynthesis" in window)) {
-      setStatus("Áudio não suportado neste navegador.", true);
+      setStatus(t('statusError'), true);
       return;
     }
     
     speechSynthesis.cancel();
     
     const utterance = new SpeechSynthesisUtterance(text);
-    
-    // Define o locale base (fallback) para garantir que o texto seja lido corretamente
     let finalLang = (specialLocales[langCode] && specialLocales[langCode][0]) || localeMap[langCode] || langCode;
     utterance.lang = finalLang;
     
     const voice = getBestVoice(langCode, state.audioProfile);
     if (voice) {
       utterance.voice = voice;
-      utterance.lang = voice.lang; // Sincroniza com o locale exato da voz encontrada
+      utterance.lang = voice.lang;
     }
     
-    // Ajuste de Tom (Pitch)
     if (state.audioProfile === 'grave') {
       utterance.pitch = 0.8; 
     } else {
       utterance.pitch = 1.05; 
     }
     
-    // Ajuste de Velocidade (Rate)
     utterance.rate = state.speed;
     
     speechSynthesis.speak(utterance);
-    setStatus("🔊 Reproduzindo áudio...");
+    setStatus("🔊 ...");
     
     utterance.onend = () => setStatus("");
     utterance.onerror = (e) => {
       console.error("Erro TTS:", e);
-      setStatus("Erro ao reproduzir este idioma.", true);
+      setStatus(t('statusError'), true);
       setTimeout(() => setStatus(""), 3000);
     };
   }
@@ -1071,7 +1249,7 @@
     historyList.innerHTML = "";
     
     if (state.history.length === 0) {
-      historyList.innerHTML = '<div style="text-align:center; font-size:12px; color:var(--text-muted); padding:10px;">Nenhum histórico recente.</div>';
+      historyList.innerHTML = `<div style="text-align:center; font-size:12px; color:var(--text-muted); padding:10px;">${t('noHistory')}</div>`;
       return;
     }
 
@@ -1084,7 +1262,7 @@
         outText.value = item.out;
         updateCounts();
         historyPanel.classList.remove("active");
-        setStatus("Histórico recuperado.");
+        setStatus(t('statusRecovered'));
         setTimeout(() => setStatus(""), 2000);
       };
       historyList.appendChild(div);
@@ -1098,19 +1276,19 @@
     toDropdown.classList.remove("active");
   };
 
-  clearHistBtn.onclick = (e) => {
+  document.getElementById("clearHistBtn").onclick = (e) => {
     e.stopPropagation();
     state.history = [];
     localStorage.removeItem("linguavox-h");
     updateHistoryUI();
-    setStatus("Histórico limpo.", false);
+    setStatus(t('statusCleared'), false);
     setTimeout(() => setStatus(""), 2000);
   };
 
   const overlay = document.getElementById("overlay");
   document.getElementById("subBtn").onclick = () => {
     if (!outText.value) {
-      setStatus("Traduza algo primeiro.", true);
+      setStatus(t('srcPlaceholder'), true);
       return;
     }
     document.getElementById("ovSrc").textContent = srcText.value;
@@ -1122,9 +1300,6 @@
   document.getElementById("ovPlay").onclick = () => speak(outText.value, state.to);
   overlay.onclick = (e) => { if (e.target === overlay) overlay.classList.remove("active"); };
 
-  // ==========================================
-  // RECONHECIMENTO DE VOZ (STT) CORRIGIDO
-  // ==========================================
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
   let recognition = null;
   let isListening = false;
@@ -1140,8 +1315,8 @@
     recognition.onstart = () => {
       isListening = true;
       micBtn.classList.add("listening");
-      micBtn.innerHTML = `${micListeningHTML} Ouvindo...`;
-      setStatus("Ouvindo... Fale agora.");
+      micBtn.innerHTML = `${micListeningHTML} <span id="uiSpeakBtn">${t('statusListening')}</span>`;
+      setStatus(t('statusListening'));
     };
 
     recognition.onresult = (event) => {
@@ -1155,14 +1330,14 @@
       console.error(event.error);
       isListening = false;
       micBtn.classList.remove("listening");
-      micBtn.innerHTML = `${micIconHTML} Falar`;
+      micBtn.innerHTML = `${micIconHTML} <span id="uiSpeakBtn">${t('speak')}</span>`;
       
       if (event.error === 'not-allowed') {
-        setStatus("Permissão de microfone negada.", true);
+        setStatus(t('statusMicDenied'), true);
       } else if (event.error === 'no-speech') {
-        setStatus("Nenhuma fala detectada.", true);
+        setStatus(t('statusNoSpeech'), true);
       } else {
-        setStatus("Erro no microfone.", true);
+        setStatus(t('statusMicError'), true);
       }
       setTimeout(() => setStatus(""), 3000);
     };
@@ -1170,13 +1345,13 @@
     recognition.onend = () => {
       isListening = false;
       micBtn.classList.remove("listening");
-      micBtn.innerHTML = `${micIconHTML} Falar`;
-      if (statusMsg.textContent === "Ouvindo... Fale agora.") {
+      micBtn.innerHTML = `${micIconHTML} <span id="uiSpeakBtn">${t('speak')}</span>`;
+      if (statusMsg.textContent === t('statusListening')) {
         setStatus("");
       }
     };
   } else {
-    micBtn.onclick = () => setStatus("Reconhecimento de voz não suportado.", true);
+    micBtn.onclick = () => setStatus(t('statusMicUnsupported'), true);
   }
 
   micBtn.onclick = () => {
@@ -1185,7 +1360,6 @@
     if (isListening) {
       recognition.stop();
     } else {
-      // Define o código do idioma para o reconhecimento
       let recLang = (specialLocales[state.from] && specialLocales[state.from][0]) || localeMap[state.from] || state.from;
       recognition.lang = recLang;
       try {
@@ -1197,6 +1371,7 @@
   };
 
   function init() {
+    applyLanguage(); // Aplica o idioma antes de qualquer coisa
     updateLangUI();
     updateHistoryUI();
     
