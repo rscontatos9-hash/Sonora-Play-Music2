@@ -559,6 +559,8 @@
         <option value="pt">🇧🇷 PT</option>
         <option value="en">🇺🇸 EN</option>
         <option value="es">🇪🇸 ES</option>
+        <option value="hi">🇮🇳 HI</option>
+        <option value="zh">🇨🇳 ZH</option>
       </select>
     </div>
     <h1 class="logo">LinguaVox</h1>
@@ -812,6 +814,82 @@
       modalClose: "Cerrar",
       modalListen: "Escuchar",
       footer: "LinguaVox • traducción vía Google + MyMemory • 100% en el navegador"
+    },
+    hi: {
+      badge: "आवाज़ और सबटाइटल अनुवादक",
+      subtitle: "Google • MyMemory • Libre इंजन, प्राकृतिक ऑडियो और सबटाइटल के साथ 30 भाषाओं के बीच अनुवाद करें।",
+      normalTone: "सामान्य स्वर",
+      deepTone: "गहरा स्वर",
+      speed: "गति",
+      origin: "स्रोत",
+      translation: "अनुवाद",
+      srcPlaceholder: "कुछ लिखें या बोलें...",
+      outPlaceholder: "अनुवाद यहाँ दिखाई देगा...",
+      speak: "बोलें",
+      listen: "सुनें",
+      clear: "साफ़ करें",
+      history: "इतिहास",
+      copy: "कॉपी करें",
+      subtitleBtn: "सबटाइटल",
+      translateBtn: "अब अनुवाद करें",
+      translatingBtn: "अनुवाद हो रहा है...",
+      clearHistory: "इतिहास साफ़ करें",
+      noHistory: "कोई हालिया इतिहास नहीं।",
+      chars: "अक्षर",
+      autoTrans: "स्वचालित अनुवाद",
+      statusListening: "सुन रहा है... अब बोलें।",
+      statusTranslating: "अनुवाद हो रहा है...",
+      statusSuccess: "✓ सफलतापूर्वक अनुवादित",
+      statusCopied: "✓ कॉपी किया गया!",
+      statusRecovered: "इतिहास पुनर्प्राप्त।",
+      statusCleared: "इतिहास साफ़ किया गया।",
+      statusError: "अनुवाद त्रुटि। अपना कनेक्शन जांचें।",
+      statusMicError: "माइक्रोफ़ोन त्रुटि।",
+      statusMicDenied: "माइक्रोफ़ोन अनुमति अस्वीकृत।",
+      statusNoSpeech: "कोई भाषण नहीं मिला।",
+      statusMicUnsupported: "वाक् पहचान समर्थित नहीं है।",
+      modalTitle: "सबटाइटल मोड",
+      modalClose: "बंद करें",
+      modalListen: "सुनें",
+      footer: "LinguaVox • Google + MyMemory के माध्यम से अनुवाद • ब्राउज़र में 100%"
+    },
+    zh: {
+      badge: "语音和字幕翻译器",
+      subtitle: "使用 Google • MyMemory • Libre 引擎在 30 种语言之间进行翻译，提供自然音频和字幕。",
+      normalTone: "正常音调",
+      deepTone: "低沉音调",
+      speed: "速度",
+      origin: "源语言",
+      translation: "翻译",
+      srcPlaceholder: "输入或说出内容...",
+      outPlaceholder: "翻译将显示在这里...",
+      speak: "说话",
+      listen: "收听",
+      clear: "清除",
+      history: "历史记录",
+      copy: "复制",
+      subtitleBtn: "字幕",
+      translateBtn: "立即翻译",
+      translatingBtn: "正在翻译...",
+      clearHistory: "清除历史记录",
+      noHistory: "没有最近的历史记录。",
+      chars: "字符",
+      autoTrans: "自动翻译",
+      statusListening: "正在聆听... 请说话。",
+      statusTranslating: "正在翻译...",
+      statusSuccess: "✓ 翻译成功",
+      statusCopied: "✓ 已复制！",
+      statusRecovered: "已恢复历史记录。",
+      statusCleared: "历史记录已清除。",
+      statusError: "翻译错误。请检查您的网络连接。",
+      statusMicError: "麦克风错误。",
+      statusMicDenied: "麦克风权限被拒绝。",
+      statusNoSpeech: "未检测到语音。",
+      statusMicUnsupported: "不支持语音识别。",
+      modalTitle: "字幕模式",
+      modalClose: "关闭",
+      modalListen: "收听",
+      footer: "LinguaVox • 通过 Google + MyMemory 翻译 • 100% 在浏览器中运行"
     }
   };
 
@@ -855,7 +933,7 @@
     history: [],
     audioProfile: "normal",
     speed: 1.0,
-    uiLang: "pt" // Idioma da interface
+    uiLang: "pt"
   };
 
   try {
@@ -896,7 +974,6 @@
   const speedValue = document.getElementById("speedValue");
   const uiLangSelect = document.getElementById("uiLangSelect");
 
-  // Função de tradução da UI
   const t = (key) => i18n[state.uiLang][key] || i18n['pt'][key];
 
   function applyLanguage() {
@@ -1371,7 +1448,7 @@
   };
 
   function init() {
-    applyLanguage(); // Aplica o idioma antes de qualquer coisa
+    applyLanguage();
     updateLangUI();
     updateHistoryUI();
     
