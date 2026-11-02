@@ -699,7 +699,7 @@
 </div>
 
 <script>
-  // Dicionário de Internacionalização (i18n) da Interface
+  // Dicionário de Internacionalização (i18n)
   const i18n = {
     pt: {
       badge: "Tradutor com voz e legenda",
@@ -893,31 +893,22 @@
     }
   };
 
-  // Dicionário de Nomes de Idiomas traduzidos para cada interface
-  const langNames = {
-    pt: { pt: "Português", en: "Inglês", es: "Espanhol", fr: "Francês", it: "Italiano", de: "Alemão", ja: "Japonês", ko: "Coreano", zh: "Chinês (Simplificado)", ru: "Russo", ar: "Árabe", hi: "Hindi", nl: "Holandês", pl: "Polonês", tr: "Turco", uk: "Ucraniano", el: "Grego", he: "Hebraico", th: "Tailandês", vi: "Vietnamita", sv: "Sueco", no: "Norueguês", da: "Dinamarquês", fi: "Finlandês", ro: "Romeno", cs: "Tcheco", hu: "Húngaro", id: "Indonésio", tl: "Filipino", bn: "Bengali" },
-    en: { pt: "Portuguese", en: "English", es: "Spanish", fr: "French", it: "Italian", de: "German", ja: "Japanese", ko: "Korean", zh: "Chinese (Simplified)", ru: "Russian", ar: "Arabic", hi: "Hindi", nl: "Dutch", pl: "Polish", tr: "Turkish", uk: "Ukrainian", el: "Greek", he: "Hebrew", th: "Thai", vi: "Vietnamese", sv: "Swedish", no: "Norwegian", da: "Danish", fi: "Finnish", ro: "Romanian", cs: "Czech", hu: "Hungarian", id: "Indonesian", tl: "Filipino", bn: "Bengali" },
-    es: { pt: "Portugués", en: "Inglés", es: "Español", fr: "Francés", it: "Italiano", de: "Alemán", ja: "Japonés", ko: "Coreano", zh: "Chino (Simplificado)", ru: "Ruso", ar: "Árabe", hi: "Hindi", nl: "Holandés", pl: "Polaco", tr: "Turco", uk: "Ucraniano", el: "Griego", he: "Hebreo", th: "Tailandés", vi: "Vietnamita", sv: "Sueco", no: "Noruego", da: "Danés", fi: "Finlandés", ro: "Rumano", cs: "Checo", hu: "Húngaro", id: "Indonesio", tl: "Filipino", bn: "Bengalí" },
-    hi: { pt: "पुर्तगाली", en: "अंग्रेज़ी", es: "स्पेनिश", fr: "फ्रेंच", it: "इतालवी", de: "जर्मन", ja: "जापानी", ko: "कोरियाई", zh: "चीनी (सरलीकृत)", ru: "रूसी", ar: "अरबी", hi: "हिन्दी", nl: "डच", pl: "पोलिश", tr: "तुर्की", uk: "यूक्रेनी", el: "यूनानी", he: "हिब्रू", th: "थाई", vi: "वियतनामी", sv: "स्वीडिश", no: "नॉर्वेजियन", da: "डेनिश", fi: "फिनिश", ro: "रोमानियाई", cs: "चेक", hu: "हंगेरियन", id: "इंडोनेशियाई", tl: "फ़िलिपीनो", bn: "बंगाली" },
-    zh: { pt: "葡萄牙语", en: "英语", es: "西班牙语", fr: "法语", it: "意大利语", de: "德语", ja: "日语", ko: "韩语", zh: "简体中文", ru: "俄语", ar: "阿拉伯语", hi: "印地语", nl: "荷兰语", pl: "波兰语", tr: "土耳其语", uk: "乌克兰语", el: "希腊语", he: "希伯来语", th: "泰语", vi: "越南语", sv: "瑞典语", no: "挪威语", da: "丹麦语", fi: "芬兰语", ro: "罗马尼亚语", cs: "捷克语", hu: "匈牙利语", id: "印尼语", tl: "菲律宾语", bn: "孟加拉语" }
-  };
-
   const LANGS = [
-    {c:"pt", f:"🇧🇷"}, {c:"en", f:"🇺🇸"},
-    {c:"es", f:"🇪🇸"}, {c:"fr", f:"🇫🇷"},
-    {c:"it", f:"🇮🇹"}, {c:"de", f:"🇩🇪"},
-    {c:"ja", f:"🇯🇵"}, {c:"ko", f:"🇰🇷"},
-    {c:"zh", f:"🇨🇳"}, {c:"ru", f:"🇷🇺"},
-    {c:"ar", f:"🇸🇦"}, {c:"hi", f:"🇮🇳"},
-    {c:"nl", f:"🇳🇱"}, {c:"pl", f:"🇵🇱"},
-    {c:"tr", f:"🇹🇷"}, {c:"uk", f:"🇺🇦"},
-    {c:"el", f:"🇬🇷"}, {c:"he", f:"🇮🇱"},
-    {c:"th", f:"🇹🇭"}, {c:"vi", f:"🇻🇳"},
-    {c:"sv", f:"🇸🇪"}, {c:"no", f:"🇳🇴"},
-    {c:"da", f:"🇩🇰"}, {c:"fi", f:"🇫🇮"},
-    {c:"ro", f:"🇷🇴"}, {c:"cs", f:"🇨🇿"},
-    {c:"hu", f:"🇭🇺"}, {c:"id", f:"🇮🇩"},
-    {c:"tl", f:"🇵🇭"}, {c:"bn", f:"🇧🇩"}
+    {c:"pt", n:"Português", f:"🇧🇷"}, {c:"en", n:"Inglês", f:"🇺🇸"},
+    {c:"es", n:"Espanhol", f:"🇪🇸"}, {c:"fr", n:"Francês", f:"🇫🇷"},
+    {c:"it", n:"Italiano", f:"🇮🇹"}, {c:"de", n:"Alemão", f:"🇩🇪"},
+    {c:"ja", n:"Japonês", f:"🇯🇵"}, {c:"ko", n:"Coreano", f:"🇰🇷"},
+    {c:"zh", n:"Chinês", f:"🇨🇳"}, {c:"ru", n:"Russo", f:"🇷🇺"},
+    {c:"ar", n:"Árabe", f:"🇸🇦"}, {c:"hi", n:"Hindi", f:"🇮🇳"},
+    {c:"nl", n:"Holandês", f:"🇳🇱"}, {c:"pl", n:"Polonês", f:"🇵🇱"},
+    {c:"tr", n:"Turco", f:"🇹🇷"}, {c:"uk", n:"Ucraniano", f:"🇺🇦"},
+    {c:"el", n:"Grego", f:"🇬🇷"}, {c:"he", n:"Hebraico", f:"🇮🇱"},
+    {c:"th", n:"Tailandês", f:"🇹🇭"}, {c:"vi", n:"Vietnamita", f:"🇻🇳"},
+    {c:"sv", n:"Sueco", f:"🇸🇪"}, {c:"no", n:"Norueguês", f:"🇳🇴"},
+    {c:"da", n:"Dinamarquês", f:"🇩🇰"}, {c:"fi", n:"Finlandês", f:"🇫🇮"},
+    {c:"ro", n:"Romeno", f:"🇷🇴"}, {c:"cs", n:"Tcheco", f:"🇨🇿"},
+    {c:"hu", n:"Húngaro", f:"🇭🇺"}, {c:"id", n:"Indonésio", f:"🇮🇩"},
+    {c:"tl", n:"Filipino", f:"🇵🇭"}, {c:"bn", n:"Bengali", f:"🇧🇩"}
   ];
 
   const localeMap = {
@@ -984,7 +975,6 @@
   const uiLangSelect = document.getElementById("uiLangSelect");
 
   const t = (key) => i18n[state.uiLang][key] || i18n['pt'][key];
-  const getLangName = (code, uiLang) => (langNames[code] && langNames[code][uiLang]) ? langNames[code][uiLang] : code;
 
   function applyLanguage() {
     document.getElementById("uiBadge").textContent = t('badge');
@@ -1017,7 +1007,6 @@
 
     updateCounts();
     updateHistoryUI();
-    updateLangUI(); // Atualiza os nomes dos idiomas nos seletores
   }
 
   uiLangSelect.value = state.uiLang;
@@ -1068,11 +1057,9 @@
     toDropdown.innerHTML = "";
     
     LANGS.forEach(l => {
-      const name = getLangName(l.c, state.uiLang);
-      
       const divF = document.createElement("div");
       divF.className = `dropdown-item ${l.c === state.from ? 'active' : ''}`;
-      divF.innerHTML = `<span class="flag">${l.f}</span> ${name}`;
+      divF.innerHTML = `<span class="flag">${l.f}</span> ${l.n}`;
       divF.onclick = () => {
         state.from = l.c;
         updateLangUI();
@@ -1083,7 +1070,7 @@
 
       const divT = document.createElement("div");
       divT.className = `dropdown-item ${l.c === state.to ? 'active' : ''}`;
-      divT.innerHTML = `<span class="flag">${l.f}</span> ${name}`;
+      divT.innerHTML = `<span class="flag">${l.f}</span> ${l.n}`;
       divT.onclick = () => {
         state.to = l.c;
         updateLangUI();
@@ -1099,12 +1086,12 @@
     const lTo = langBy(state.to);
     
     fromFlag.textContent = lFrom.f;
-    fromName.textContent = getLangName(state.from, state.uiLang);
-    fromChip.textContent = getLangName(state.from, state.uiLang);
+    fromName.textContent = lFrom.n;
+    fromChip.textContent = lFrom.n;
     
     toFlag.textContent = lTo.f;
-    toName.textContent = getLangName(state.to, state.uiLang);
-    toChip.textContent = getLangName(state.to, state.uiLang) + " 100%";
+    toName.textContent = lTo.n;
+    toChip.textContent = lTo.n + " 100%";
     
     renderDropdowns();
     localStorage.setItem("linguavox-from", state.from);
@@ -1461,7 +1448,8 @@
   };
 
   function init() {
-    applyLanguage(); // Isso já chama updateLangUI() internamente
+    applyLanguage();
+    updateLangUI();
     updateHistoryUI();
     
     const savedSrc = localStorage.getItem("linguavox-src");
